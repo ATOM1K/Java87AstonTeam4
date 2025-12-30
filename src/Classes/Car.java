@@ -9,10 +9,10 @@ public class Car {
     ///Год производства
     int yearOfCreate;
 
-    public Car(double power, String model, int yearOfCreate) {
-        this.power = power;
-        this.model = model;
-        this.yearOfCreate = yearOfCreate;
+    public Car(CarBuilder carBuilder) {
+        this.power = carBuilder.power;
+        this.model = carBuilder.model;
+        this.yearOfCreate = carBuilder.yearOfCreate;
     }
 
     public double getPower() {
@@ -68,5 +68,33 @@ public class Car {
         return power == c.power
                 & CharSequence.compare(model, c.model) == 0
                 & yearOfCreate == c.yearOfCreate;
+    }
+
+    public static class CarBuilder{
+        /// Мощность
+        private double power;
+        ///Модель
+        private String model;
+        ///Год производства
+        private int yearOfCreate;
+
+        public CarBuilder setPower(double power) {
+            this.power = power;
+            return this;
+        }
+
+        public CarBuilder setModel(String model) {
+            this.model = model;
+            return this;
+        }
+
+        public CarBuilder setYearOfCreate(int yearOfCreate) {
+            this.yearOfCreate = yearOfCreate;
+            return this;
+        }
+
+        public Car build() {
+            return new Car(this);
+        }
     }
 }

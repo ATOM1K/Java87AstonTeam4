@@ -1,3 +1,5 @@
+import Classes.Car;
+
 import java.util.Scanner;
 
 public class Main {
@@ -5,7 +7,7 @@ public class Main {
         boolean check = true;
         while (check) {
             System.out.println("Выберите пункт меню: \n" +
-                    "1 - Пункт 1 \n" +
+                    "1 - Создание объекта класса \n" +
                     "2 - Пункт 2 \n" +
                     "0 - Выход \n" +
                     "Ваш выбор:");
@@ -15,7 +17,9 @@ public class Main {
 
             switch(menu){
                 case "1":{
-                    System.out.println("Пункт 1");
+                    Car car =new Car.CarBuilder().setModel("Audi R8").setPower(20000).setYearOfCreate(2005).build();
+
+                    System.out.println(car.toString());
                     break;
                 }
                 case "2":{

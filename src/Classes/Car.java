@@ -70,6 +70,7 @@ public class Car {
                 & yearOfCreate == c.yearOfCreate;
     }
 
+    /// Класс Билдера
     public static class CarBuilder{
         /// Мощность
         private double power;

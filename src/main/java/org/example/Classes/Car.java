@@ -1,4 +1,4 @@
-package Classes;
+package org.example.Classes;
 
 /// Класс Автомобиль
 public class Car {

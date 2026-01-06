@@ -1,4 +1,4 @@
-package Classes;
+package main.java.classes;
 
 /// Класс Автомобиль
 public class Car {

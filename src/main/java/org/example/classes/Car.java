@@ -1,7 +1,7 @@
 package org.example.classes;
 
 /// Класс Автомобиль
-public class Car {
+public class Car implements Comparable<Car> {
     /// Мощность
     double power;
     ///Модель
@@ -68,5 +68,16 @@ public class Car {
         return power == c.power
                 & CharSequence.compare(model, c.model) == 0
                 & yearOfCreate == c.yearOfCreate;
+    }
+
+    @Override
+    public int compareTo(Car otherСar) {
+        int yearCompare = Integer.compare(otherСar.yearOfCreate, this.yearOfCreate); // Новые вперед
+        if(yearCompare != 0) return yearCompare;
+
+        int powerCompare = Double.compare(otherСar.power, this.power);
+        if(powerCompare != 0) return powerCompare;
+
+        return this.model.compareTo(otherСar.model);
     }
 }

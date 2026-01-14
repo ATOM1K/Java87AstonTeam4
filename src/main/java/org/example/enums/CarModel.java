@@ -1,20 +1,15 @@
 package org.example.enums;
 
-import java.util.Collections;
 import java.util.Optional;
 
 public enum CarModel {
     LADA_VESTA("Lada Vesta"),
     LADA_GRANTA("Lada Granta"),
     RENAULT_LOGAN("Renault Logan"),
-//    Японские
     TOYOTA_CAMRY("Toyota Camry"),
     MAZDA_6("Mazda 6"),
-//    Корейские
     KIA_RIO("Kia Rio"),
-//    Американские
     FORD_FOCUS("Ford Focus"),
-//    Немецкие
     AUDI_A4("Audi A4"),
     VOLKSWAGEN_PASSAT("Volkswagen Passat");
 
@@ -33,7 +28,7 @@ public enum CarModel {
         return modelName;
     }
 
-//    Метод для получения enum по строке
+    //    Метод для получения enum по строке
     public static Optional<CarModel> fromString(String text) {
         for (CarModel model : CarModel.values()) {
 //            TODO: Нужна ли валидация аргумента text?

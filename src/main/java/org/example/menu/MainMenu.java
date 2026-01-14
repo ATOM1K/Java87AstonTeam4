@@ -19,7 +19,7 @@ public class MainMenu {
      * Запускает главный цикл приложения.
      */
     public void run() {
-        System.out.println("🚗 ПРИЛОЖЕНИЕ ДЛЯ РАБОТЫ С АВТОМОБИЛЯМИ");
+        System.out.println("ПРИЛОЖЕНИЕ ДЛЯ РАБОТЫ С АВТОМОБИЛЯМИ");
         System.out.println("==========================================\n");
 
         while (running) {
@@ -57,7 +57,7 @@ public class MainMenu {
         System.out.println("║ 3. Заполнить список из файла                 ║");
         System.out.println("║ 4. Показать список автомобилей               ║");
         System.out.println("║ 5. Отсортировать список                      ║");
-        System.out.println("║ 6. Сортировка только четных значений (Доп1) ║");
+        System.out.println("║ 6. Сортировка только четных значений (Доп1)  ║");
         System.out.println("║ 7. Сохранить в файл (Доп2)                   ║");
         System.out.println("║ 8. Найти модель (Доп4 - многопоточный)       ║");
         System.out.println("║ 9. Очистить список                           ║");

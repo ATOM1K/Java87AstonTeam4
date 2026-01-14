@@ -1,5 +1,8 @@
 package org.example.demo;
 
+import org.example.classes.Car;
+import org.example.classes.ImmutableCar;
+
 /**
  * Тесты для сравнения двух реализаций.
  */
@@ -16,17 +19,13 @@ public class CarTest {
         System.out.println("1. ТЕСТ ИММУТАБЕЛЬНОСТИ:");
 
         // Оригинальный класс - ИЗМЕНЯЕМЫЙ
-        org.example.Classes.Car original = new org.example.Classes.Car.CarBuilder()
-                .setModel("Audi")
-                .setPower(200)
-                .setYearOfCreate(2020)
-                .build();
+        Car original = new Car(200, "Audi", 2020);
 
         original.setPower(250); // МОЖНО ИЗМЕНИТЬ!
         System.out.println("   Оригинал: мощность изменена после создания: " + original.getPower());
 
         // Улучшенный класс - ИММУТАБЕЛЬНЫЙ
-        org.example.improved.Car improved = org.example.improved.Car.create("Audi", 200, 2020);
+        ImmutableCar improved = ImmutableCar.create("Audi", 200, 2020);
         // improved.setPower(250); // КОМПИЛЯЦИЯ УПАДЕТ - нет сеттера!
         System.out.println("   Улучшенный: нельзя изменить после создания (компилятор не позволит)");
     }
@@ -35,16 +34,12 @@ public class CarTest {
         System.out.println("\n2. ТЕСТ ВАЛИДАЦИИ:");
 
         System.out.println("   Оригинал: можно создать с невалидными данными:");
-        org.example.Classes.Car invalidOriginal = new org.example.Classes.Car.CarBuilder()
-                .setModel("")           // пустая модель
-                .setPower(-100)         // отрицательная мощность
-                .setYearOfCreate(1700)  // нереалистичный год
-                .build();               // БЕЗ ОШИБОК!
+        Car invalidOriginal = new Car(-100, "", 1700);
         System.out.println("      Создан: " + invalidOriginal);
 
         System.out.println("\n   Улучшенный: НЕЛЬЗЯ создать с невалидными данными:");
         try {
-            org.example.improved.Car invalidImproved = new org.example.improved.Car.Builder()
+            ImmutableCar invalidImproved = new ImmutableCar.Builder()
                     .model("")
                     .power(-100)
                     .manufactureYear(1700)
@@ -59,8 +54,8 @@ public class CarTest {
         System.out.println("\n3. ТЕСТ РАБОТЫ С КОЛЛЕКЦИЯМИ (equals/hashCode):");
 
         // Создаем два одинаковых автомобиля
-        org.example.improved.Car car1 = org.example.improved.Car.create("Toyota", 150, 2020);
-        org.example.improved.Car car2 = org.example.improved.Car.create("Toyota", 150, 2020);
+        ImmutableCar car1 = ImmutableCar.create("Toyota", 150, 2020);
+        ImmutableCar car2 = ImmutableCar.create("Toyota", 150, 2020);
 
         System.out.println("   car1.equals(car2): " + car1.equals(car2));
         System.out.println("   car1.hashCode() == car2.hashCode(): " +
@@ -68,14 +63,14 @@ public class CarTest {
         System.out.println("   (должно быть false, т.к. у них разные ID)");
 
         // Тест с одинаковыми ID
-        org.example.improved.Car car3 = new org.example.improved.Car.Builder()
+        ImmutableCar car3 = new ImmutableCar.Builder()
                 .id("same_id")
                 .model("Honda")
                 .power(130)
                 .manufactureYear(2019)
                 .build();
 
-        org.example.improved.Car car4 = new org.example.improved.Car.Builder()
+        ImmutableCar car4 = new ImmutableCar.Builder()
                 .id("same_id")  // ТОТ ЖЕ ID
                 .model("Honda")
                 .power(130)

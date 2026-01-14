@@ -1,5 +1,7 @@
 package org.example.dopolnitelnoe3;
 
+import org.example.classes.Car;
+
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -13,7 +15,7 @@ public class CarStreamService {
         CarCollection collection = new CarCollection();
 
         List<Car> cars = carDataStream
-                .map(data -> new Car(data.getModel(), data.getPower(), data.getYearOfCreate()))
+                .map(data -> new Car(data.getPower(), data.getModel(), data.getYearOfCreate()))
                 .collect(Collectors.toList());
 
         collection.addAll(cars);

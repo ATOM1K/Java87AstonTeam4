@@ -1,8 +1,7 @@
 package org.example.classes;
 
-import org.example.interfaces.SortStrategy;
+import org.example.strategy.SortStrategy;
 
-import java.util.ArrayList;
 import java.util.List;
 
 // Контекст (обработчик) для работы с кастомными сортировками
@@ -21,7 +20,7 @@ public class CarSorter {
         return sortStrategy;
     }
 
-    public void sort(List<Car> cars) {
+    public void sort(List<ImmutableCar> cars) {
         sortStrategy.sort(cars);
     }
 }

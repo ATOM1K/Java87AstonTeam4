@@ -1,12 +1,9 @@
 package org.example.demo;
 
-import org.example.improved.Car;
+import org.example.classes.ImmutableCar;
 import org.example.service.CarService;
 import org.example.strategy.*;
 import org.example.comparator.*;
-import java.util.Scanner;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 
 /**
  * Комплексный тест всей функциональности.
@@ -31,7 +28,7 @@ public class ComprehensiveTest {
         System.out.println("1. ТЕСТ ВАЛИДАЦИИ ДАННЫХ:");
 
         try {
-            Car valid = Car.create("Toyota", 150, 2020);
+            ImmutableCar valid = ImmutableCar.create("Toyota", 150, 2020);
             System.out.println("   ✅ Валидный автомобиль создан: " + valid.getModel());
         } catch (Exception e) {
             System.out.println("   ❌ Ошибка: " + e.getMessage());
@@ -48,13 +45,13 @@ public class ComprehensiveTest {
         for (String testCase : testCases) {
             try {
                 if (testCase.contains("Пустая")) {
-                    Car.create("", 100, 2020);
+                    ImmutableCar.create("", 100, 2020);
                 } else if (testCase.contains("Отрицательная")) {
-                    Car.create("Test", -100, 2020);
+                    ImmutableCar.create("Test", -100, 2020);
                 } else if (testCase.contains("ранний")) {
-                    Car.create("Test", 100, 1800);
+                    ImmutableCar.create("Test", 100, 1800);
                 } else if (testCase.contains("большая")) {
-                    Car.create("Test", 2000, 2020);
+                    ImmutableCar.create("Test", 2000, 2020);
                 }
                 System.out.println("   ❌ " + testCase + " - должно быть исключение!");
             } catch (IllegalArgumentException e) {
@@ -105,10 +102,10 @@ public class ComprehensiveTest {
         CarService service = new CarService();
 
         // Создаем автомобили с четной и нечетной мощностью
-        service.getCars().add(Car.create("Car1", 120, 2020)); // четная
-        service.getCars().add(Car.create("Car2", 151, 2021)); // нечетная
-        service.getCars().add(Car.create("Car3", 180, 2019)); // четная
-        service.getCars().add(Car.create("Car4", 199, 2018)); // нечетная
+        service.getCars().add(ImmutableCar.create("Car1", 120, 2020)); // четная
+        service.getCars().add(ImmutableCar.create("Car2", 151, 2021)); // нечетная
+        service.getCars().add(ImmutableCar.create("Car3", 180, 2019)); // четная
+        service.getCars().add(ImmutableCar.create("Car4", 199, 2018)); // нечетная
 
         System.out.println("   До сортировки:");
         for (var car : service.getCars()) {
@@ -135,10 +132,10 @@ public class ComprehensiveTest {
 
         // Добавляем несколько одинаковых моделей
         for (int i = 0; i < 5; i++) {
-            service.getCars().add(Car.create("Tesla", 300 + i * 10, 2020 + i));
+            service.getCars().add(ImmutableCar.create("Tesla", 300 + i * 10, 2020 + i));
         }
         for (int i = 0; i < 3; i++) {
-            service.getCars().add(Car.create("BMW", 250 + i * 20, 2019 + i));
+            service.getCars().add(ImmutableCar.create("BMW", 250 + i * 20, 2019 + i));
         }
 
         System.out.println("   Всего автомобилей: " + service.getCount());

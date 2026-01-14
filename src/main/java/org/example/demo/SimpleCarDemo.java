@@ -1,12 +1,14 @@
 package org.example.demo;
 
+import org.example.classes.ImmutableCar;
+
 /**
  * Простая демонстрация улучшенного класса Car.
  * Не использует import чтобы избежать конфликтов имен.
  */
 public class SimpleCarDemo {
     public static void main(String[] args) {
-        System.out.println("🚗 ДЕМОНСТРАЦИЯ УЛУЧШЕННОГО КЛАССА CAR\n");
+        System.out.println("ДЕМОНСТРАЦИЯ УЛУЧШЕННОГО КЛАССА CAR\n");
 
         System.out.println("=".repeat(60));
         System.out.println("1. СОЗДАНИЕ ВАЛИДНОГО АВТОМОБИЛЯ:");
@@ -14,7 +16,7 @@ public class SimpleCarDemo {
 
         try {
             // Создаем улучшенный автомобиль
-            org.example.improved.Car tesla = new org.example.improved.Car.Builder()
+            ImmutableCar tesla = new ImmutableCar.Builder()
                     .model("Tesla Model S")
                     .power(670)
                     .manufactureYear(2023)
@@ -41,7 +43,7 @@ public class SimpleCarDemo {
         // Тест 1: Пустая модель
         System.out.println("\nТест 1: Пустая модель");
         try {
-            org.example.improved.Car invalid1 = new org.example.improved.Car.Builder()
+            ImmutableCar invalid1 = new ImmutableCar.Builder()
                     .model("")  // ПУСТО - ДОЛЖНА БЫТЬ ОШИБКА
                     .power(150)
                     .manufactureYear(2020)
@@ -54,7 +56,7 @@ public class SimpleCarDemo {
         // Тест 2: Отрицательная мощность
         System.out.println("\nТест 2: Отрицательная мощность");
         try {
-            org.example.improved.Car invalid2 = new org.example.improved.Car.Builder()
+            ImmutableCar invalid2 = new ImmutableCar.Builder()
                     .model("BMW")
                     .power(-50)  // ОТРИЦАТЕЛЬНАЯ - ДОЛЖНА БЫТЬ ОШИБКА
                     .manufactureYear(2020)
@@ -67,7 +69,7 @@ public class SimpleCarDemo {
         // Тест 3: Нереалистичный год
         System.out.println("\nТест 3: Нереалистичный год выпуска");
         try {
-            org.example.improved.Car invalid3 = new org.example.improved.Car.Builder()
+            ImmutableCar invalid3 = new ImmutableCar.Builder()
                     .model("Ford")
                     .power(120)
                     .manufactureYear(1800)  // СЛИШКОМ РАННИЙ - ДОЛЖНА БЫТЬ ОШИБКА
@@ -81,13 +83,13 @@ public class SimpleCarDemo {
         System.out.println("3. СРАВНЕНИЕ С ОРИГИНАЛЬНЫМ КЛАССОМ:");
         System.out.println("=".repeat(60));
 
-        System.out.println("\n📌 Оригинальный класс (org.example.Classes.Car):");
+        System.out.println("\nОригинальный класс (org.example.Classes.Car):");
         System.out.println("   • Изменяемый (есть сеттеры)");
         System.out.println("   • Нет валидации при создании");
         System.out.println("   • Можно создать объект в невалидном состоянии");
         System.out.println("   • Простая реализация equals/hashCode");
 
-        System.out.println("\n✨ Улучшенный класс (org.example.improved.Car):");
+        System.out.println("\nУлучшенный класс (org.example.classes.Car):");
         System.out.println("   • Иммутабельный (только геттеры)");
         System.out.println("   • Встроенная валидация в Builder");
         System.out.println("   • Гарантированно валидное состояние");
@@ -97,7 +99,7 @@ public class SimpleCarDemo {
         System.out.println("   • Дата создания объекта");
 
         System.out.println("\n" + "=".repeat(60));
-        System.out.println("🎯 ВЫВОД: Улучшенная версия защищает от ошибок");
+        System.out.println("ВЫВОД: Улучшенная версия защищает от ошибок");
         System.out.println("   и делает код более надежным и предсказуемым!");
         System.out.println("=".repeat(60));
     }

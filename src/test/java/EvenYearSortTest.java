@@ -1,4 +1,4 @@
-import org.example.classes.Car;
+import org.example.classes.ImmutableCar;
 import org.example.classes.CarSorter;
 import org.example.strategy.EvenYearSort;
 import org.example.enums.CarModel;
@@ -11,27 +11,27 @@ import java.util.List;
 public class EvenYearSortTest {
     @Test
     public void evenSortByYear() {
-        List<Car> actual1 = new ArrayList<>(
+        List<ImmutableCar> actual1 = new ArrayList<>(
             List.of(
-                new Car(60, CarModel.AUDI_A4.getModelName(),2022),
-                new Car(70, CarModel.AUDI_A4.getModelName(),2024),
-                new Car(70, CarModel.TOYOTA_CAMRY.getModelName(),2021),
-                new Car(70, CarModel.TOYOTA_CAMRY.getModelName(),2026),
-                new Car(78, CarModel.MAZDA_6.getModelName(),2019),
-                new Car(75, CarModel.LADA_GRANTA.getModelName(),2020),
-                new Car(65, CarModel.LADA_GRANTA.getModelName(),2021)
+                ImmutableCar.create(CarModel.AUDI_A4.getModelName(),60,2022),
+                ImmutableCar.create(CarModel.AUDI_A4.getModelName(),70,2024),
+                ImmutableCar.create(CarModel.TOYOTA_CAMRY.getModelName(),70,2021),
+                ImmutableCar.create(CarModel.TOYOTA_CAMRY.getModelName(),70,2026),
+                ImmutableCar.create(CarModel.MAZDA_6.getModelName(),78,2019),
+                ImmutableCar.create(CarModel.LADA_GRANTA.getModelName(),75,2020),
+                ImmutableCar.create(CarModel.LADA_GRANTA.getModelName(),65,2021)
             )
         );
 
-        List<Car> expected1 = new ArrayList<>(
+        List<ImmutableCar> expected1 = new ArrayList<>(
             List.of(
-                new Car(75, CarModel.LADA_GRANTA.getModelName(),2020),
-                new Car(60, CarModel.AUDI_A4.getModelName(),2022),
-                new Car(70, CarModel.TOYOTA_CAMRY.getModelName(),2021),
-                new Car(70, CarModel.AUDI_A4.getModelName(),2024),
-                new Car(78, CarModel.MAZDA_6.getModelName(),2019),
-                new Car(70, CarModel.TOYOTA_CAMRY.getModelName(),2026),
-                new Car(65, CarModel.LADA_GRANTA.getModelName(),2021)
+                actual1.get(5),
+                actual1.get(0),
+                actual1.get(2),
+                actual1.get(1),
+                actual1.get(4),
+                actual1.get(3),
+                actual1.get(6)
             )
         );
 

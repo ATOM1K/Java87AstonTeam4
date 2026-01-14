@@ -1,6 +1,6 @@
 package org.example.service;
 
-import org.example.improved.Car;
+import org.example.classes.ImmutableCar;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,7 +18,7 @@ public class FileService {
     /**
      * Сохраняет список автомобилей в файл (добавление данных).
      */
-    public void saveToFileAppend(List<Car> cars, String filename, String description) {
+    public void saveToFileAppend(List<ImmutableCar> cars, String filename, String description) {
         Path path = Paths.get(filename);
 
         try {
@@ -41,7 +41,7 @@ public class FileService {
 
             // Добавляем данные об автомобилях
             for (int i = 0; i < cars.size(); i++) {
-                Car car = cars.get(i);
+                ImmutableCar car = cars.get(i);
                 content.append(String.format("%3d. %-20s | %6.0f л.с. | %4d год | ID: %s%n",
                         i + 1,
                         car.getModel(),
@@ -65,7 +65,7 @@ public class FileService {
     /**
      * Читает автомобили из файла (упрощенная версия).
      */
-    public List<Car> readFromFile(String filename) {
+    public List<ImmutableCar> readFromFile(String filename) {
         // TODO: реализовать полноценное чтение из файла
         System.out.println("Чтение из файла будет реализовано в следующей версии");
         return List.of();

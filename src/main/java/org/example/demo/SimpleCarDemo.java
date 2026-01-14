@@ -1,104 +1,57 @@
 package org.example.demo;
 
+import org.example.improved.Car;
+import org.example.comparator.*;
+import java.util.*;
+
 /**
- * Простая демонстрация улучшенного класса Car.
- * Не использует import чтобы избежать конфликтов имен.
+ * Простая демонстрация работы с автомобилями.
  */
 public class SimpleCarDemo {
     public static void main(String[] args) {
-        System.out.println("🚗 ДЕМОНСТРАЦИЯ УЛУЧШЕННОГО КЛАССА CAR\n");
+        System.out.println("ПРОСТАЯ ДЕМОНСТРАЦИЯ\n");
 
-        System.out.println("=".repeat(60));
-        System.out.println("1. СОЗДАНИЕ ВАЛИДНОГО АВТОМОБИЛЯ:");
-        System.out.println("=".repeat(60));
+        // Создаем список автомобилей
+        List<Car> cars = new ArrayList<>();
+        cars.add(Car.create("Toyota Camry", 203, 2020));
+        cars.add(Car.create("BMW X5", 306, 2019));
+        cars.add(Car.create("Audi A4", 190, 2021));
+        cars.add(Car.create("Honda Civic", 158, 2018));
+        cars.add(Car.create("Tesla Model 3", 283, 2022));
 
-        try {
-            // Создаем улучшенный автомобиль
-            org.example.improved.Car tesla = new org.example.improved.Car.Builder()
-                    .model("Tesla Model S")
-                    .power(670)
-                    .manufactureYear(2023)
-                    .build();
+        System.out.println("Исходный список:");
+        printCars(cars);
 
-            System.out.println("✅ Успешно создан:");
-            System.out.println("   • Модель: " + tesla.getModel());
-            System.out.println("   • Мощность: " + tesla.getPower() + " л.с.");
-            System.out.println("   • Год выпуска: " + tesla.getManufactureYear());
-            System.out.println("   • Возраст: " + tesla.getAge() + " лет");
-            System.out.println("   • Винтажный? " + tesla.isVintage());
-            System.out.println("   • Электромобиль? " + tesla.isElectric());
-            System.out.println("   • ID: " + tesla.getId());
-            System.out.println("   • Полное описание: " + tesla);
+        System.out.println("\n1. Сортировка по мощности (возрастание):");
+        cars.sort(new CarPowerComparator());
+        printCars(cars);
 
-        } catch (Exception e) {
-            System.out.println("❌ Ошибка: " + e.getMessage());
+        System.out.println("\n2. Сортировка по модели (алфавитный порядок):");
+        cars.sort(new CarModelComparator());
+        printCars(cars);
+
+        System.out.println("\n3. Сортировка по году (от новых к старым):");
+        cars.sort(Comparator.comparingInt(Car::getManufactureYear).reversed());
+        printCars(cars);
+
+        System.out.println("\n4. Базовая сортировка (год ↓, мощность ↓, модель ↑):");
+        cars.sort(new BaseComparator());
+        printCars(cars);
+    }
+
+    private static void printCars(List<Car> cars) {
+        System.out.println("+-----+--------------------+------------+--------------+");
+        System.out.println("|  #  |       Модель       | Мощность   |     Год      |");
+        System.out.println("+-----+--------------------+------------+--------------+");
+
+        for (int i = 0; i < cars.size(); i++) {
+            Car car = cars.get(i);
+            System.out.printf("| %3d | %-18s | %6.0f л.с. |     %4d     |%n",
+                    i + 1,
+                    car.getModel().length() > 18 ? car.getModel().substring(0, 15) + "..." : car.getModel(),
+                    car.getPower(),
+                    car.getManufactureYear());
         }
-
-        System.out.println("\n" + "=".repeat(60));
-        System.out.println("2. ПРОВЕРКА ВАЛИДАЦИИ (должны быть ошибки):");
-        System.out.println("=".repeat(60));
-
-        // Тест 1: Пустая модель
-        System.out.println("\nТест 1: Пустая модель");
-        try {
-            org.example.improved.Car invalid1 = new org.example.improved.Car.Builder()
-                    .model("")  // ПУСТО - ДОЛЖНА БЫТЬ ОШИБКА
-                    .power(150)
-                    .manufactureYear(2020)
-                    .build();
-            System.out.println("   ❌ НЕПРАВИЛЬНО: создался невалидный автомобиль");
-        } catch (IllegalArgumentException e) {
-            System.out.println("   ✅ ПРАВИЛЬНО: " + e.getMessage());
-        }
-
-        // Тест 2: Отрицательная мощность
-        System.out.println("\nТест 2: Отрицательная мощность");
-        try {
-            org.example.improved.Car invalid2 = new org.example.improved.Car.Builder()
-                    .model("BMW")
-                    .power(-50)  // ОТРИЦАТЕЛЬНАЯ - ДОЛЖНА БЫТЬ ОШИБКА
-                    .manufactureYear(2020)
-                    .build();
-            System.out.println("   ❌ НЕПРАВИЛЬНО: создался невалидный автомобиль");
-        } catch (IllegalArgumentException e) {
-            System.out.println("   ✅ ПРАВИЛЬНО: " + e.getMessage());
-        }
-
-        // Тест 3: Нереалистичный год
-        System.out.println("\nТест 3: Нереалистичный год выпуска");
-        try {
-            org.example.improved.Car invalid3 = new org.example.improved.Car.Builder()
-                    .model("Ford")
-                    .power(120)
-                    .manufactureYear(1800)  // СЛИШКОМ РАННИЙ - ДОЛЖНА БЫТЬ ОШИБКА
-                    .build();
-            System.out.println("   ❌ НЕПРАВИЛЬНО: создался невалидный автомобиль");
-        } catch (IllegalArgumentException e) {
-            System.out.println("   ✅ ПРАВИЛЬНО: " + e.getMessage());
-        }
-
-        System.out.println("\n" + "=".repeat(60));
-        System.out.println("3. СРАВНЕНИЕ С ОРИГИНАЛЬНЫМ КЛАССОМ:");
-        System.out.println("=".repeat(60));
-
-        System.out.println("\n📌 Оригинальный класс (org.example.Classes.Car):");
-        System.out.println("   • Изменяемый (есть сеттеры)");
-        System.out.println("   • Нет валидации при создании");
-        System.out.println("   • Можно создать объект в невалидном состоянии");
-        System.out.println("   • Простая реализация equals/hashCode");
-
-        System.out.println("\n✨ Улучшенный класс (org.example.improved.Car):");
-        System.out.println("   • Иммутабельный (только геттеры)");
-        System.out.println("   • Встроенная валидация в Builder");
-        System.out.println("   • Гарантированно валидное состояние");
-        System.out.println("   • Дополнительные методы: getAge(), isVintage(), isElectric()");
-        System.out.println("   • Правильные equals() и hashCode() с Objects");
-        System.out.println("   • Уникальный ID для каждого автомобиля");
-        System.out.println("   • Дата создания объекта");
-
-        System.out.println("\n" + "=".repeat(60));
-        System.out.println("🎯 ВЫВОД: Улучшенная версия защищает от ошибок");
-        System.out.println("   и делает код более надежным и предсказуемым!");
-        System.out.println("=".repeat(60));
+        System.out.println("+-----+--------------------+------------+--------------+");
     }
 }

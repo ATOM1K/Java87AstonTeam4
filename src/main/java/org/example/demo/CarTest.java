@@ -5,7 +5,7 @@ package org.example.demo;
  */
 public class CarTest {
     public static void main(String[] args) {
-        System.out.println("🧪 ТЕСТЫ ДЛЯ СРАВНЕНИЯ\n");
+        System.out.println("ТЕСТЫ ДЛЯ СРАВНЕНИЯ\n");
 
         testImmutability();
         testValidation();
@@ -15,12 +15,8 @@ public class CarTest {
     private static void testImmutability() {
         System.out.println("1. ТЕСТ ИММУТАБЕЛЬНОСТИ:");
 
-        // Оригинальный класс - ИЗМЕНЯЕМЫЙ
-        org.example.Classes.Car original = new org.example.Classes.Car.CarBuilder()
-                .setModel("Audi")
-                .setPower(200)
-                .setYearOfCreate(2020)
-                .build();
+        // Оригинальный класс - ИЗМЕНЯЕМЫЙ (из пакета dopolnitelnoe3)
+        org.example.dopolnitelnoe3.Car original = new org.example.dopolnitelnoe3.Car("Audi", 200, 2020);
 
         original.setPower(250); // МОЖНО ИЗМЕНИТЬ!
         System.out.println("   Оригинал: мощность изменена после создания: " + original.getPower());
@@ -35,11 +31,7 @@ public class CarTest {
         System.out.println("\n2. ТЕСТ ВАЛИДАЦИИ:");
 
         System.out.println("   Оригинал: можно создать с невалидными данными:");
-        org.example.Classes.Car invalidOriginal = new org.example.Classes.Car.CarBuilder()
-                .setModel("")           // пустая модель
-                .setPower(-100)         // отрицательная мощность
-                .setYearOfCreate(1700)  // нереалистичный год
-                .build();               // БЕЗ ОШИБОК!
+        org.example.dopolnitelnoe3.Car invalidOriginal = new org.example.dopolnitelnoe3.Car("", -100, 1700);
         System.out.println("      Создан: " + invalidOriginal);
 
         System.out.println("\n   Улучшенный: НЕЛЬЗЯ создать с невалидными данными:");
@@ -49,16 +41,16 @@ public class CarTest {
                     .power(-100)
                     .manufactureYear(1700)
                     .build();
-            System.out.println("      ❌ ОШИБКА: должно было быть исключение!");
+            System.out.println("      ОШИБКА: должно было быть исключение!");
         } catch (IllegalArgumentException e) {
-            System.out.println("      ✅ ПРАВИЛЬНО: " + e.getMessage());
+            System.out.println("      ПРАВИЛЬНО: " + e.getMessage());
         }
     }
 
     private static void testCollections() {
         System.out.println("\n3. ТЕСТ РАБОТЫ С КОЛЛЕКЦИЯМИ (equals/hashCode):");
 
-        // Создаем два одинаковых автомобиля
+        // Создаем два одинаковых автомобиля (improved версия)
         org.example.improved.Car car1 = org.example.improved.Car.create("Toyota", 150, 2020);
         org.example.improved.Car car2 = org.example.improved.Car.create("Toyota", 150, 2020);
 

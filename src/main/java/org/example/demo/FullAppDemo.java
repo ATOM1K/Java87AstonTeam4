@@ -1,10 +1,18 @@
-// src/main/java/org/example/demo/FullAppDemo.java
 package org.example.demo;
 
 import org.example.menu.MainMenu;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 
 public class FullAppDemo {
     public static void main(String[] args) {
+        // Устанавливаем кодировку вывода
+        try {
+            System.setOut(new PrintStream(System.out, true, "UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("🚗 ПОЛНАЯ ВЕРСИЯ ПРИЛОЖЕНИЯ (ВСЕ УЛУЧШЕНИЯ)");
         System.out.println("============================================\n");
 
@@ -18,7 +26,8 @@ public class FullAppDemo {
         System.out.println("7. ✅ Доп.3: Streams API для генерации");
         System.out.println("8. ✅ Доп.4: Многопоточный поиск");
         System.out.println("9. ✅ Валидация данных в Builder");
-        System.out.println("10. ✅ Иммутабельный класс Car\n");
+        System.out.println("10. ✅ Иммутабельный класс Car");
+        System.out.println("11. ✅ Streams API операции (Доп.3)\n");
 
         MainMenu menu = new MainMenu();
         menu.run();

@@ -1,4 +1,4 @@
-import org.example.classes.Car;
+import org.example.improved.Car;
 import org.example.classes.CarSorter;
 import org.example.strategy.EvenYearSort;
 import org.example.enums.CarModel;
@@ -41,3 +41,4 @@ public class EvenYearSortTest {
         Assert.assertEquals(expected1, actual1);
     }
 }
+

@@ -4,7 +4,7 @@ import org.example.improved.Car;
 import java.util.Comparator;
 
 /**
- * Компаратор для сортировки автомобилей по году производства.
+ * омпаратор для сортировки автомобилей по году производства.
  */
 public class CarYearComparator implements Comparator<Car> {
 

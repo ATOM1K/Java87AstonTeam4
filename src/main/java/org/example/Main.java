@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.Classes.Car;
+import org.example.improved.Car;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -77,7 +77,7 @@ public class Main {
         System.out.println("Введите год создания автомобиля: ");
         yearOfCreate = scan.nextInt();
 
-        carList.add(new Car.CarBuilder().setModel(model).setPower(power).setYearOfCreate(yearOfCreate).build());
+        carList.add(new Car.Builder().model(model).power(power).manufactureYear(yearOfCreate).build());
     }
 
     ///Визуальное представление списка
@@ -87,7 +87,7 @@ public class Main {
         System.out.println("______________________________________________________");
         for (Car car : carList)
             System.out.printf("%s       | %f        | %d     \n",
-                    car.getModel(), car.getPower(), car.getYearOfCreate());
+                    car.getModel(), car.getPower(), car.getManufactureYear());
     }
 
     /// Чтение из файла
@@ -109,7 +109,7 @@ public class Main {
                 double power = Double.parseDouble(car.get("power").toString());
                 int yearOfCreate = Integer.parseInt(car.get("yearOfCreate").toString());
 
-                carList.add(new Car.CarBuilder().setModel(model).setPower(power).setYearOfCreate(yearOfCreate).build());
+                carList.add(new Car.Builder().model(model).power(power).manufactureYear(yearOfCreate).build());
             }
         } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -127,7 +127,7 @@ public class Main {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("model", car.getModel());
                 jsonObject.put("power", car.getPower());
-                jsonObject.put("yearOfCreate", car.getYearOfCreate());
+                jsonObject.put("yearOfCreate", car.getManufactureYear());
 
                 jsonArray.add(jsonObject);
             }

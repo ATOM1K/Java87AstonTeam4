@@ -1,13 +1,12 @@
 package org.example.service;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+
 import org.example.classes.ImmutableCar;
-import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -18,56 +17,27 @@ public class FileService {
     /**
      * Сохраняет список автомобилей в файл (добавление данных).
      */
-    public void saveToFileAppend(List<ImmutableCar> cars, String filename, String description) {
-        Path path = Paths.get(filename);
-
+    public void saveToFileAppend(List<ImmutableCar> cars, String filename) {
         try {
-            // Создаем директорию если не существует
-            if (path.getParent() != null) {
-                Files.createDirectories(path.getParent());
+            Path resourcesDir = Paths.get("src/main/resources");
+            JSONArray jsonArray = new JSONArray();
+
+            for (ImmutableCar car : cars) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("model", car.getModel());
+                jsonObject.put("power", car.getPower());
+                jsonObject.put("yearOfCreate", car.getManufactureYear());
+
+                jsonArray.add(jsonObject);
             }
 
-            // Формируем содержимое для записи
-            StringBuilder content = new StringBuilder();
-
-            // Добавляем заголовок с временем и описанием
-            String timestamp = LocalDateTime.now().format(
-                    DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            content.append("\n").append("=".repeat(60)).append("\n");
-            content.append("Сохранено: ").append(timestamp).append("\n");
-            content.append("Описание: ").append(description).append("\n");
-            content.append("Количество автомобилей: ").append(cars.size()).append("\n");
-            content.append("=".repeat(60)).append("\n\n");
-
-            // Добавляем данные об автомобилях
-            for (int i = 0; i < cars.size(); i++) {
-                ImmutableCar car = cars.get(i);
-                content.append(String.format("%3d. %-20s | %6.0f л.с. | %4d год | ID: %s%n",
-                        i + 1,
-                        car.getModel(),
-                        car.getPower(),
-                        car.getManufactureYear(),
-                        car.getId()));
-            }
-
-            // Записываем в файл с ДОБАВЛЕНИЕМ (APPEND)
-            Files.writeString(path, content.toString(),
-                    StandardOpenOption.CREATE, StandardOpenOption.APPEND);
-
-            System.out.println("✅ Данные сохранены в файл: " + filename);
-            System.out.println("   Режим: добавление (старые данные сохранены)");
-
-        } catch (IOException e) {
-            System.err.println("❌ Ошибка при сохранении в файл: " + e.getMessage());
+            String jsonString = jsonArray.toJSONString();
+            Files.writeString(resourcesDir.resolve(filename), jsonString);
         }
-    }
-
-    /**
-     * Читает автомобили из файла (упрощенная версия).
-     */
-    public List<ImmutableCar> readFromFile(String filename) {
-        // TODO: реализовать полноценное чтение из файла
-        System.out.println("Чтение из файла будет реализовано в следующей версии");
-        return List.of();
+        catch (Exception e)
+        {
+            System.out.println("Ошибка сохранения данных");
+            e.printStackTrace();
+        }
     }
 }

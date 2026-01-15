@@ -153,13 +153,15 @@ public class MainMenu {
             return;
         }
 
-        System.out.print("\nВведите имя файла (например: cars.txt): ");
+        System.out.print("\nВведите имя файла (например: cars.json): ");
+
         String filename = scanner.nextLine();
-
-        System.out.print("Введите описание для сохранения: ");
-        String description = scanner.nextLine();
-
-        fileService.saveToFileAppend(carService.getCars(), filename, description);
+        if (filename.trim().isEmpty()) {
+            System.out.println("Имя файла не может быть пустым");
+        }
+        else {
+            fileService.saveToFileAppend(carService.getCars(), filename);
+        }
     }
 
     private void searchMenu() {

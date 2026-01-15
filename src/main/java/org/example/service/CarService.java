@@ -3,6 +3,16 @@ package org.example.service;
 import org.example.classes.ImmutableCar;
 import org.example.strategy.SortStrategy;
 import org.example.dopolnitelnoe3.CarStreamService;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -112,8 +122,33 @@ public class CarService {
 
     public void fillFromFile(String filename) {
         System.out.println("\n=== ЧТЕНИЕ ИЗ ФАЙЛА ===");
-        // TODO: реализовать чтение из JSON/CSV файла
-        System.out.println("Чтение из файла будет реализовано позже");
+        Path resourcesDir = Paths.get("src/main/resources");
+        try (BufferedReader reader = Files.newBufferedReader(resourcesDir.resolve(filename)))
+        {
+            String lineFile;
+            StringBuilder jsonString = new StringBuilder();
+            while (null != (lineFile = reader.readLine()))
+                jsonString.append(lineFile).append("\n");
+
+            JSONParser parser = new JSONParser();
+            JSONArray carJSONArray = (JSONArray) parser.parse(String.valueOf(jsonString));
+
+            for(Object obj : carJSONArray){
+                JSONObject car = (JSONObject) obj;
+
+                String model = (String) car.get("model");
+                double power = Double.parseDouble(car.get("power").toString());
+                int yearOfCreate = Integer.parseInt(car.get("yearOfCreate").toString());
+
+                cars.add(ImmutableCar.create(model, power, yearOfCreate));
+            }
+        } catch (ParseException e) {
+            System.out.println("Ошибка парсинга");
+//            throw new RuntimeException(e);
+        } catch (IOException e) {
+            System.out.println("Ошибка чтения файла");
+//            throw new RuntimeException(e);
+        }
     }
 
     // Методы сортировки

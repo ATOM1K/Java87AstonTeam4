@@ -65,9 +65,9 @@ public class IntegrationTest {
         CarService carService = new CarService();
         carService.fillRandom(3);
         
-        System.out.println("   Тест сохранения в файл:");
-        fileService.saveToFileAppend(carService.getCars(), "test_output.txt", "Тест интеграции");
-        System.out.println("   ✅ айл создан (проверьте test_output.txt)");
+        System.out.println("Тест сохранения в файл:");
+        fileService.saveToFileAppend(carService.getCars(), "test_output.txt");
+        System.out.println("Файл создан (проверьте test_output.txt)");
     }
     
     private static void testAllStrategies() {

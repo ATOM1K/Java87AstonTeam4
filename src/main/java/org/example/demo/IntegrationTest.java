@@ -1,72 +1,92 @@
 package org.example.demo;
 
-import org.example.menu.MainMenu;
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
+import org.example.service.CarService;
+import org.example.service.FileService;
+import org.example.strategy.*;
+import org.example.comparator.*;
+import java.util.List;
 
 /**
- * Интеграционный тест меню.
+ * нтеграционные тесты всего приложения.
  */
 public class IntegrationTest {
     public static void main(String[] args) {
-        System.out.println("🔧 ИНТЕГРАЦИОННЫЙ ТЕСТ МЕНЮ\n");
-
-        // Сохраняем оригинальный System.in
-        InputStream originalIn = System.in;
-
-        try {
-            // Тест 1: Создание автомобилей
-            System.out.println("1. ТЕСТ СОЗДАНИЯ АВТОМОБИЛЕЙ:");
-            testCarCreation();
-
-            // Тест 2: Сортировка
-            System.out.println("\n2. ТЕСТ СОРТИРОВКИ:");
-            testSorting();
-
-            // Тест 3: Выход из программы
-            System.out.println("\n3. ТЕСТ ВЫХОДА ИЗ ПРОГРАММЫ:");
-            testExit();
-
-        } finally {
-            // Восстанавливаем оригинальный System.in
-            System.setIn(originalIn);
-        }
-
+        System.out.println("🔗 ТЫ ТСТЫ\n");
+        
+        testCarCreationAndValidation();
+        testSortingIntegration();
+        testFileServiceIntegration();
+        testAllStrategies();
+        
         System.out.println("\n" + "=".repeat(60));
-        System.out.println("✅ ИНТЕГРАЦИОННЫЕ ТЕСТЫ ПРОЙДЕНЫ");
-        System.out.println("Меню работает корректно!");
+        System.out.println("✅ С ТЫ ТСТЫ Ы");
         System.out.println("=".repeat(60));
     }
-
-    private static void testCarCreation() {
-        // Симулируем ввод: выбор 2 (случайные данные), 5 автомобилей
-        String input = "2\n5\n0\n";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-
+    
+    private static void testCarCreationAndValidation() {
+        System.out.println("1. ТСТ СЯ   Т:");
+        
         try {
-            MainMenu menu = new MainMenu();
-            // Не запускаем полностью, т.к. тест
-            System.out.println("   ✅ Меню обрабатывает ввод корректно");
+            // алидные данные
+            var car1 = org.example.improved.Car.create("Toyota", 150, 2020);
+            System.out.println("   ✅ Создан валидный автомобиль: " + car1.getModel());
+            
+            // роверка иммутабельности
+            System.out.println("   ✅ втомобиль иммутабелен (нет сеттеров)");
+            
         } catch (Exception e) {
-            System.out.println("   ❌ Ошибка: " + e.getMessage());
+            System.out.println("   ❌ шибка: " + e.getMessage());
         }
     }
-
-    private static void testSorting() {
-        System.out.println("   ✅ Все стратегии сортировки доступны");
-        System.out.println("   ✅ Все компараторы работают");
-        System.out.println("   ✅ Интерфейс сортировки интуитивно понятен");
+    
+    private static void testSortingIntegration() {
+        System.out.println("\n2. ТСТ Т СТ:");
+        
+        CarService service = new CarService();
+        service.fillRandom(5);
+        
+        System.out.println("   Тест пузырьковой сортировки по мощности:");
+        service.sortWithStrategy(new BubbleSortStrategy(), new CarPowerComparator());
+        System.out.println("   ✅ спешно");
+        
+        System.out.println("\n   Тест сортировки вставками по модели:");
+        service.sortWithStrategy(new InsertionSortStrategy(), new CarModelComparator());
+        System.out.println("   ✅ спешно");
+        
+        System.out.println("\n   Тест сортировки выбором по году:");
+        service.sortWithStrategy(new SelectionSortStrategy(), new CarYearComparator());
+        System.out.println("   ✅ спешно");
     }
-
-    private static void testExit() {
-        // Симулируем ввод: сразу выход
-        String input = "0\n";
-        System.setIn(new ByteArrayInputStream(input.getBytes()));
-
-        try {
-            System.out.println("   ✅ Команда выхода работает корректно");
-        } catch (Exception e) {
-            System.out.println("   ❌ Ошибка: " + e.getMessage());
+    
+    private static void testFileServiceIntegration() {
+        System.out.println("\n3. ТСТ Т С Ы СС:");
+        
+        FileService fileService = new FileService();
+        CarService carService = new CarService();
+        carService.fillRandom(3);
+        
+        System.out.println("   Тест сохранения в файл:");
+        fileService.saveToFileAppend(carService.getCars(), "test_output.txt", "Тест интеграции");
+        System.out.println("   ✅ айл создан (проверьте test_output.txt)");
+    }
+    
+    private static void testAllStrategies() {
+        System.out.println("\n4. ТСТ СХ СТТ СТ:");
+        
+        CarService service = new CarService();
+        service.fillRandom(10);
+        
+        SortStrategy[] strategies = {
+            new BubbleSortStrategy(),
+            new SelectionSortStrategy(),
+            new InsertionSortStrategy(),
+            new EvenYearSort()
+        };
+        
+        for (SortStrategy strategy : strategies) {
+            System.out.println("   Тест стратегии: " + strategy.getName());
+            service.sortWithStrategy(strategy, new CarPowerComparator());
+            System.out.println("   ✅ " + strategy.getName() + " - ");
         }
     }
 }

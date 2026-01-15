@@ -1,6 +1,14 @@
 package org.example.demo;
 
 import org.example.classes.ImmutableCar;
+import org.example.comparator.CarModelComparator;
+import org.example.comparator.CarPowerComparator;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+import static org.example.demo.ComparatorTest.printCars;
 
 /**
  * Простая демонстрация работы с автомобилями.
@@ -10,12 +18,12 @@ public class SimpleCarDemo {
         System.out.println("🚗 ДЕМОНСТРАЦИЯ УЛУЧШЕННОГО КЛАССА CAR\n");
 
         // Создаем список автомобилей
-        List<Car> cars = new ArrayList<>();
-        cars.add(Car.create("Toyota Camry", 203, 2020));
-        cars.add(Car.create("BMW X5", 306, 2019));
-        cars.add(Car.create("Audi A4", 190, 2021));
-        cars.add(Car.create("Honda Civic", 158, 2018));
-        cars.add(Car.create("Tesla Model 3", 283, 2022));
+        List<ImmutableCar> cars = new ArrayList<>();
+        cars.add(ImmutableCar.create("Toyota Camry", 203, 2020));
+        cars.add(ImmutableCar.create("BMW X5", 306, 2019));
+        cars.add(ImmutableCar.create("Audi A4", 190, 2021));
+        cars.add(ImmutableCar.create("Honda Civic", 158, 2018));
+        cars.add(ImmutableCar.create("Tesla Model 3", 283, 2022));
 
         try {
             // Создаем улучшенный автомобиль
@@ -24,6 +32,9 @@ public class SimpleCarDemo {
                     .power(670)
                     .manufactureYear(2023)
                     .build();
+        } catch (IllegalArgumentException e) {
+            System.out.println("   ✅ ПРАВИЛЬНО: " + e.getMessage());
+        }
 
         System.out.println("\n1. Сортировка по мощности (возрастание):");
         cars.sort(new CarPowerComparator());
@@ -34,7 +45,7 @@ public class SimpleCarDemo {
         printCars(cars);
 
         System.out.println("\n3. Сортировка по году (от новых к старым):");
-        cars.sort(Comparator.comparingInt(Car::getManufactureYear).reversed());
+        cars.sort(Comparator.comparingInt(ImmutableCar::getManufactureYear).reversed());
         printCars(cars);
 
         // Тест 1: Пустая модель

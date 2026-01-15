@@ -39,7 +39,7 @@ public class ComparatorTest {
         printCars(sortedByYear);
     }
 
-    private static void printCars(List<ImmutableCar> cars) {
+    static void printCars(List<ImmutableCar> cars) {
         for (int i = 0; i < cars.size(); i++) {
             ImmutableCar car = cars.get(i);
             System.out.printf("  %d. %s (%.0f л.с., %d год)%n",

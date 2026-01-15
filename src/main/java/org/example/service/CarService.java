@@ -1,8 +1,7 @@
 package org.example.service;
 
-import org.example.improved.Car;
+import org.example.classes.ImmutableCar;
 import org.example.strategy.SortStrategy;
-import org.example.dopolnitelnoe3.CarData;
 import org.example.dopolnitelnoe3.CarStreamService;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -69,7 +68,7 @@ public class CarService {
         System.out.println("\n===   STREAMS API (оп.3) ===");
         var carCollection = carStreamService.createSampleCollection();
         cars = carCollection.getCars().stream()
-                .map(car -> Car.create(car.getModel(), car.getPower(), car.getYearOfCreate()))
+                .map(car -> ImmutableCar.create(car.getModel(), car.getPower(), car.getYearOfCreate()))
                 .collect(Collectors.toList());
         System.out.println("✅ Добавлено " + cars.size() + " автомобилей через Streams API");
     }
@@ -83,15 +82,15 @@ public class CarService {
         System.out.println("сего автомобилей: " + cars.size());
 
         System.out.println("\n1.    ЫС:");
-        Map<Integer, List<Car>> carsByYear = cars.stream()
-                .collect(Collectors.groupingBy(Car::getManufactureYear));
+        Map<Integer, List<ImmutableCar>> carsByYear = cars.stream()
+                .collect(Collectors.groupingBy(ImmutableCar::getManufactureYear));
         carsByYear.forEach((year, carList) -> {
             System.out.printf("   %d год: %d автомобилей%n", year, carList.size());
         });
 
         System.out.println("\n2. СТТСТ ЩСТ:");
         DoubleSummaryStatistics stats = cars.stream()
-                .mapToDouble(Car::getPower)
+                .mapToDouble(ImmutableCar::getPower)
                 .summaryStatistics();
         System.out.printf("   Средняя мощность: %.1f л.с.%n", stats.getAverage());
         System.out.printf("   аксимальная: %.0f л.с.%n", stats.getMax());
@@ -105,7 +104,7 @@ public class CarService {
 
         System.out.println("\n4. ЬЫ :");
         long uniqueModels = cars.stream()
-                .map(Car::getModel)
+                .map(ImmutableCar::getModel)
                 .distinct()
                 .count();
         System.out.printf("   никальных моделей: %d%n", uniqueModels);
@@ -241,7 +240,7 @@ public class CarService {
         System.out.println("├─────┼────────────────────┼────────────┼──────────────┼───────┤");
 
         for (int i = 0; i < cars.size(); i++) {
-            Car car = cars.get(i);
+            ImmutableCar car = cars.get(i);
             System.out.printf("│ %3d │ %-18s │ %6.0f л.с. │     %4d     │ %3d л. │%n",
                     i + 1,
                     car.getModel().length() > 18 ? car.getModel().substring(0, 15) + "..." : car.getModel(),

@@ -1,6 +1,6 @@
 package org.example.demo;
 
-import org.example.improved.Car;
+import org.example.classes.ImmutableCar;
 import org.example.comparator.*;
 import org.example.strategy.*;
 import java.util.ArrayList;
@@ -15,7 +15,7 @@ public class StrategyTest {
         System.out.println("🧪 ТЕСТ ПАТТЕРНА СТРАТЕГИЯ\n");
 
         // Создаем тестовые данные
-        List<Car> cars = createTestCars();
+        List<ImmutableCar> cars = createTestCars();
 
         // Создаем стратегии
         SortStrategy[] strategies = {
@@ -28,7 +28,6 @@ public class StrategyTest {
         for (SortStrategy strategy : strategies) {
             System.out.println("\n" + "=".repeat(60));
             System.out.println("СТРАТЕГИЯ: " + strategy.getName());
-            System.out.println(strategy.getDescription());
             System.out.println("=".repeat(60));
 
             testWithComparator(strategy, cars, new CarPowerComparator());
@@ -38,10 +37,10 @@ public class StrategyTest {
     }
 
     // ИЗМЕНЕНИЕ ЗДЕСЬ: вместо CarPowerComparator используем Comparator<Car>
-    private static void testWithComparator(SortStrategy strategy, List<Car> originalCars,
-                                           Comparator<Car> comparator) {
+    private static void testWithComparator(SortStrategy strategy, List<ImmutableCar> originalCars,
+                                           Comparator<ImmutableCar> comparator) {
         // Копируем список для сортировки
-        List<Car> carsToSort = new ArrayList<>(originalCars);
+        List<ImmutableCar> carsToSort = new ArrayList<>(originalCars);
 
         System.out.println("\n📊 " + comparator + ":");
         System.out.println("До сортировки:");
@@ -66,20 +65,20 @@ public class StrategyTest {
         }
     }
 
-    private static List<Car> createTestCars() {
-        List<Car> cars = new ArrayList<>();
-        cars.add(Car.create("Ford", 120, 2015));
-        cars.add(Car.create("BMW", 250, 2020));
-        cars.add(Car.create("Audi", 180, 2018));
-        cars.add(Car.create("Toyota", 150, 2019));
-        cars.add(Car.create("Tesla", 300, 2023));
-        cars.add(Car.create("Honda", 130, 2016));
+    private static List<ImmutableCar> createTestCars() {
+        List<ImmutableCar> cars = new ArrayList<>();
+        cars.add(ImmutableCar.create("Ford", 120, 2015));
+        cars.add(ImmutableCar.create("BMW", 250, 2020));
+        cars.add(ImmutableCar.create("Audi", 180, 2018));
+        cars.add(ImmutableCar.create("Toyota", 150, 2019));
+        cars.add(ImmutableCar.create("Tesla", 300, 2023));
+        cars.add(ImmutableCar.create("Honda", 130, 2016));
         return cars;
     }
 
-    private static void printCarsShort(List<Car> cars) {
+    private static void printCarsShort(List<ImmutableCar> cars) {
         for (int i = 0; i < Math.min(cars.size(), 5); i++) {
-            Car car = cars.get(i);
+            ImmutableCar car = cars.get(i);
             System.out.printf("  %s (%.0f л.с., %d) ",
                     car.getModel(), car.getPower(), car.getManufactureYear());
         }
@@ -88,7 +87,7 @@ public class StrategyTest {
     }
 
     // ИЗМЕНЕНИЕ ЗДЕСЬ: тоже используем Comparator<Car>
-    private static boolean isSorted(List<Car> cars, Comparator<Car> comparator) {
+    private static boolean isSorted(List<ImmutableCar> cars, Comparator<ImmutableCar> comparator) {
         for (int i = 0; i < cars.size() - 1; i++) {
             if (comparator.compare(cars.get(i), cars.get(i + 1)) > 0) {
                 return false;

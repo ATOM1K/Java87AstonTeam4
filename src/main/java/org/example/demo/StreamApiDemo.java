@@ -1,9 +1,9 @@
 package org.example.demo;
 
+import org.example.classes.Car;
+import org.example.classes.ImmutableCar;
 import org.example.dopolnitelnoe3.*;
-import org.example.improved.Car;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * Демонстрация работы с Streams API (Доп. задание 3).
@@ -62,13 +62,13 @@ public class StreamApiDemo {
 
         // Преобразуем в improved.Car для демонстрации
         var cars = collection.getCars().stream()
-                .map(car -> Car.create(car.getModel(), car.getPower(), car.getYearOfCreate()))
+                .map(car -> ImmutableCar.create(car.getModel(), car.getPower(), car.getYearOfCreate()))
                 .toList();
 
         // 1. Группировка по модели
         System.out.println("   а) Группировка по модели:");
         var byModel = cars.stream()
-                .collect(java.util.stream.Collectors.groupingBy(Car::getModel));
+                .collect(java.util.stream.Collectors.groupingBy(ImmutableCar::getModel));
 
         byModel.forEach((model, carList) -> {
             System.out.printf("      - %s: %d автомобилей%n", model, carList.size());
@@ -83,7 +83,7 @@ public class StreamApiDemo {
         // 3. Сортировка
         System.out.println("\n   в) Сортировка по году (новые сначала):");
         cars.stream()
-                .sorted(java.util.Comparator.comparingInt(Car::getManufactureYear).reversed())
+                .sorted(java.util.Comparator.comparingInt(ImmutableCar::getManufactureYear).reversed())
                 .forEach(car -> System.out.printf("      - %s (%d год)%n", car.getModel(), car.getManufactureYear()));
     }
 
@@ -93,8 +93,8 @@ public class StreamApiDemo {
         // Обычный подход
         System.out.println("   Обычный подход (без Streams):");
         CarCollection collection = new CarCollection();
-        collection.add(new org.example.dopolnitelnoe3.Car("Toyota", 150, 2020));
-        collection.add(new org.example.dopolnitelnoe3.Car("BMW", 250, 2021));
+        collection.add(new Car(150,"Toyota",  2020));
+        collection.add(new Car(250,"BMW",  2021));
 
         int totalPower = 0;
         for (var car : collection) {
@@ -105,12 +105,12 @@ public class StreamApiDemo {
         // Streams API подход
         System.out.println("\n   Streams API подход:");
         var carList = List.of(
-                Car.create("Toyota", 150, 2020),
-                Car.create("BMW", 250, 2021)
+                ImmutableCar.create("Toyota", 150, 2020),
+                ImmutableCar.create("BMW", 250, 2021)
         );
 
         double streamTotalPower = carList.stream()
-                .mapToDouble(Car::getPower)
+                .mapToDouble(ImmutableCar::getPower)
                 .sum();
         System.out.println("      Суммарная мощность: " + streamTotalPower + " л.с.");
 

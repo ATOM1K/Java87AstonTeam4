@@ -1,13 +1,13 @@
 package org.example.demo;
 
+import org.example.classes.ImmutableCar;
 import org.example.service.CarService;
 import org.example.service.FileService;
 import org.example.strategy.*;
 import org.example.comparator.*;
-import java.util.List;
 
 /**
- * нтеграционные тесты всего приложения.
+ * Интеграционные тесты всего приложения.
  */
 public class IntegrationTest {
     public static void main(String[] args) {
@@ -28,7 +28,7 @@ public class IntegrationTest {
         
         try {
             // алидные данные
-            var car1 = org.example.improved.Car.create("Toyota", 150, 2020);
+            var car1 = ImmutableCar.create("Toyota", 150, 2020);
             System.out.println("   ✅ Создан валидный автомобиль: " + car1.getModel());
             
             // роверка иммутабельности

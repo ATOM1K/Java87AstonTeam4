@@ -1,4 +1,4 @@
-package org.example.improved;
+package org.example.classes;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -7,7 +7,7 @@ import java.util.Objects;
  * Улучшенная иммутабельная версия класса Car.
  * Демонстрирует best practices: валидация, иммутабельность.
  */
-public final class Car {
+public final class ImmutableCar {
     // Все поля final - класс иммутабельный
     private final String id;
     private final String model;
@@ -16,7 +16,7 @@ public final class Car {
     private final LocalDate createdAt;
 
     // Приватный конструктор - только Builder может создавать
-    private Car(Builder builder) {
+    private ImmutableCar(Builder builder) {
         this.id = builder.id;
         this.model = builder.model;
         this.power = builder.power;
@@ -70,7 +70,7 @@ public final class Car {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Car car = (Car) o;
+        ImmutableCar car = (ImmutableCar) o;
         return Double.compare(car.power, power) == 0 &&
                 manufactureYear == car.manufactureYear &&
                 Objects.equals(id, car.id) &&
@@ -85,7 +85,7 @@ public final class Car {
     /**
      * Статический фабричный метод для удобного создания.
      */
-    public static Car create(String model, double power, int year) {
+    public static ImmutableCar create(String model, double power, int year) {
         return new Builder()
                 .model(model)
                 .power(power)
@@ -156,10 +156,10 @@ public final class Car {
             return this;
         }
 
-        public Car build() {
+        public ImmutableCar build() {
             // Финальная проверка перед созданием объекта
             validate();
-            return new Car(this);
+            return new ImmutableCar(this);
         }
 
         private void validate() {

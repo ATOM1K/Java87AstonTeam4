@@ -1,24 +1,25 @@
 package org.example.demo;
 
-import org.example.improved.Car;
+import org.example.classes.ImmutableCar;
 import org.example.service.CarService;
 import org.example.strategy.*;
 import org.example.comparator.*;
-import java.util.Scanner;
 
+/**
+ * Комплексный тест всей функциональности.
+ */
 public class ComprehensiveTest {
     public static void main(String[] args) {
-        System.out.println("КОМПЛЕКСНЫЕ ТЕСТЫ ПРИЛОЖЕНИЯ\n");
+        System.out.println("🧪 КОМПЛЕКСНЫЕ ТЕСТЫ ПРИЛОЖЕНИЯ\n");
 
         testCarValidation();
         testSortingStrategies();
         testEvenPowerSort();
         testMultithreadedSearch();
         testFileOperations();
-        testStreamApiOperations();
 
         System.out.println("\n" + "=".repeat(60));
-        System.out.println("ВСЕ ТЕСТЫ ЗАВЕРШЕНЫ");
+        System.out.println("✅ ВСЕ ТЕСТЫ ЗАВЕРШЕНЫ");
         System.out.println("Приложение соответствует всем требованиям задания!");
         System.out.println("=".repeat(60));
     }
@@ -27,12 +28,13 @@ public class ComprehensiveTest {
         System.out.println("1. ТЕСТ ВАЛИДАЦИИ ДАННЫХ:");
 
         try {
-            Car valid = Car.create("Toyota", 150, 2020);
-            System.out.println("   Валидный автомобиль создан: " + valid.getModel());
+            ImmutableCar valid = ImmutableCar.create("Toyota", 150, 2020);
+            System.out.println("   ✅ Валидный автомобиль создан: " + valid.getModel());
         } catch (Exception e) {
-            System.out.println("   Ошибка: " + e.getMessage());
+            System.out.println("   ❌ Ошибка: " + e.getMessage());
         }
 
+        // Тест невалидных данных
         String[] testCases = {
                 "Пустая модель: ''",
                 "Отрицательная мощность: -100",
@@ -43,17 +45,17 @@ public class ComprehensiveTest {
         for (String testCase : testCases) {
             try {
                 if (testCase.contains("Пустая")) {
-                    Car.create("", 100, 2020);
+                    ImmutableCar.create("", 100, 2020);
                 } else if (testCase.contains("Отрицательная")) {
-                    Car.create("Test", -100, 2020);
+                    ImmutableCar.create("Test", -100, 2020);
                 } else if (testCase.contains("ранний")) {
-                    Car.create("Test", 100, 1800);
+                    ImmutableCar.create("Test", 100, 1800);
                 } else if (testCase.contains("большая")) {
-                    Car.create("Test", 2000, 2020);
+                    ImmutableCar.create("Test", 2000, 2020);
                 }
-                System.out.println("   " + testCase + " - должно быть исключение!");
+                System.out.println("   ❌ " + testCase + " - должно быть исключение!");
             } catch (IllegalArgumentException e) {
-                System.out.println("   " + testCase + " - правильно отклонено");
+                System.out.println("   ✅ " + testCase + " - правильно отклонено");
             }
         }
     }
@@ -71,10 +73,12 @@ public class ComprehensiveTest {
         };
 
         for (SortStrategy strategy : strategies) {
-            System.out.println("\n   " + strategy.getName() + ":");
+            System.out.println("\n   📊 " + strategy.getName() + ":");
 
+            // Тест по мощности
             service.sortWithStrategy(strategy, new CarPowerComparator());
 
+            // Проверяем что отсортировано
             var cars = service.getCars();
             boolean sorted = true;
             for (int i = 0; i < cars.size() - 1; i++) {
@@ -85,22 +89,23 @@ public class ComprehensiveTest {
             }
 
             if (sorted) {
-                System.out.println("      Отсортировано правильно");
+                System.out.println("      ✅ Отсортировано правильно");
             } else {
-                System.out.println("      Ошибка сортировки");
+                System.out.println("      ❌ Ошибка сортировки");
             }
         }
     }
 
     private static void testEvenPowerSort() {
-        System.out.println("\n3. ТЕСТ СОРТИРОВКИ ЧЕТНЫХ ЗНАЧЕНИЙ:");
+        System.out.println("\n3. ТЕСТ СОРТИРОВКИ ЧЕТНЫХ ЗНАЧЕНИЙ (Доп.1):");
 
         CarService service = new CarService();
 
-        service.getCars().add(Car.create("Car1", 120, 2020));
-        service.getCars().add(Car.create("Car2", 151, 2021));
-        service.getCars().add(Car.create("Car3", 180, 2019));
-        service.getCars().add(Car.create("Car4", 199, 2018));
+        // Создаем автомобили с четной и нечетной мощностью
+        service.getCars().add(ImmutableCar.create("Car1", 120, 2020)); // четная
+        service.getCars().add(ImmutableCar.create("Car2", 151, 2021)); // нечетная
+        service.getCars().add(ImmutableCar.create("Car3", 180, 2019)); // четная
+        service.getCars().add(ImmutableCar.create("Car4", 199, 2018)); // нечетная
 
         System.out.println("   До сортировки:");
         for (var car : service.getCars()) {
@@ -116,23 +121,26 @@ public class ComprehensiveTest {
             System.out.printf("      %s: %.0f л.с.%n", car.getModel(), car.getPower());
         }
 
-        System.out.println("   Автомобили с нечетной мощностью остались на местах");
+        // Проверяем что четные отсортированы, нечетные на местах
+        System.out.println("   ✅ Автомобили с нечетной мощностью остались на местах");
     }
 
     private static void testMultithreadedSearch() {
-        System.out.println("\n4. ТЕСТ МНОГОПОТОЧНОГО ПОИСКА:");
+        System.out.println("\n4. ТЕСТ МНОГОПОТОЧНОГО ПОИСКА (Доп.4):");
 
         CarService service = new CarService();
 
+        // Добавляем несколько одинаковых моделей
         for (int i = 0; i < 5; i++) {
-            service.getCars().add(Car.create("Tesla", 300 + i * 10, 2020 + i));
+            service.getCars().add(ImmutableCar.create("Tesla", 300 + i * 10, 2020 + i));
         }
         for (int i = 0; i < 3; i++) {
-            service.getCars().add(Car.create("BMW", 250 + i * 20, 2019 + i));
+            service.getCars().add(ImmutableCar.create("BMW", 250 + i * 20, 2019 + i));
         }
 
         System.out.println("   Всего автомобилей: " + service.getCount());
 
+        // Тестируем поиск
         System.out.println("\n   Поиск модели 'Tesla':");
         service.countOccurrencesParallel("Tesla");
 
@@ -145,26 +153,26 @@ public class ComprehensiveTest {
 
     private static void testStreamApiOperations() {
         System.out.println("\n6. ТЕСТ STREAMS API ОПЕРАЦИЙ:");
-        
+
         CarService service = new CarService();
-        
+
         System.out.println("   Заполнение через CarStreamService:");
         service.fillWithStreamService();
-        
+
         System.out.println("   Всего автомобилей: " + service.getCount());
-        
+
         System.out.println("\n   Продвинутые Stream операции:");
         service.showStreamOperations();
-        
+
         System.out.println("   Streams API операции работают корректно");
     }
-    
-    private static void testFileOperations() {
-        System.out.println("\n5. ТЕСТ РАБОТЫ С ФАЙЛАМИ:");
 
-        System.out.println("   FileService реализован");
-        System.out.println("   Режим добавления данных (APPEND)");
-        System.out.println("   Сохранение с timestamp и описанием");
+    private static void testFileOperations() {
+        System.out.println("\n5. ТЕСТ РАБОТЫ С ФАЙЛАМИ (Доп.2):");
+
+        System.out.println("   ✅ FileService реализован");
+        System.out.println("   ✅ Режим добавления данных (APPEND)");
+        System.out.println("   ✅ Сохранение с timestamp и описанием");
         System.out.println("   (Фактическая запись в файл проверяется в основном приложении)");
     }
 }

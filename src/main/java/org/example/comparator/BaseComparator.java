@@ -1,14 +1,15 @@
 package org.example.comparator;
 
-import org.example.improved.Car;
+import org.example.classes.ImmutableCar;
+import org.example.classes.Car;
 
 import java.util.Comparator;
 
-public class BaseComparator implements Comparator<Car> {
+public class BaseComparator implements Comparator<ImmutableCar> {
 
     @Override
-    public int compare(Car o1, Car o2) {
-        int yearCompare = Integer.compare(o2.getManufactureYear(), o1.getManufactureYear()); // Р СњР С•Р Р†РЎвЂ№Р Вµ Р Р†Р С—Р ВµРЎР‚Р ВµР Т‘
+    public int compare(ImmutableCar o1, ImmutableCar o2) {
+        int yearCompare = Integer.compare(o2.getManufactureYear(), o1.getManufactureYear()); // Новые вперед
         if(yearCompare != 0) return yearCompare;
 
         int powerCompare = Double.compare(o2.getPower(), o1.getPower());
@@ -17,5 +18,3 @@ public class BaseComparator implements Comparator<Car> {
         return o1.getModel().compareTo(o2.getModel());
     }
 }
-
-

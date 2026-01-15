@@ -1,7 +1,7 @@
-import org.example.improved.Car;
+import org.example.classes.ImmutableCar;
 import org.example.classes.CarSorter;
-import org.example.strategy.InsertionSort;
 import org.example.enums.CarModel;
+import org.example.strategy.InsertionSortStrategy;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,23 +11,23 @@ import java.util.List;
 public class InsertionSortTest {
     @Test
     public void sortByYear() {
-        List<Car> actual1 = new ArrayList<>(
+        List<ImmutableCar> actual1 = new ArrayList<>(
             List.of(
-                new Car(16, CarModel.AUDI_A4.getModelName(),2020),
-                new Car(20, CarModel.AUDI_A4.getModelName(),2017),
-                new Car(20, CarModel.TOYOTA_CAMRY.getModelName(),2021)
+                ImmutableCar.create(CarModel.AUDI_A4.getModelName(),16, 2020),
+                ImmutableCar.create(CarModel.AUDI_A4.getModelName(),20,2017),
+                ImmutableCar.create(CarModel.TOYOTA_CAMRY.getModelName(),20,2021)
             )
         );
 
-        List<Car> expected1 = new ArrayList<>(
+        List<ImmutableCar> expected1 = new ArrayList<>(
             List.of(
-                new Car(20, CarModel.TOYOTA_CAMRY.getModelName(),2021),
-                new Car(16, CarModel.AUDI_A4.getModelName(),2020),
-                new Car(20, CarModel.AUDI_A4.getModelName(),2017)
+                actual1.get(2),
+                actual1.get(0),
+                actual1.get(1)
             )
         );
 
-        CarSorter carSorter = new CarSorter(new InsertionSort());
+        CarSorter carSorter = new CarSorter(new InsertionSortStrategy());
         carSorter.sort(actual1);
 
         Assert.assertEquals(expected1, actual1);
@@ -35,29 +35,29 @@ public class InsertionSortTest {
 
     @Test
     public void sortByPower() {
-        List<Car> actual1 = new ArrayList<>(
+        List<ImmutableCar> actual1 = new ArrayList<>(
             List.of(
-                new Car(60, CarModel.AUDI_A4.getModelName(),2020),
-                new Car(70, CarModel.AUDI_A4.getModelName(),2020),
-                new Car(70, CarModel.TOYOTA_CAMRY.getModelName(),2020),
-                new Car(78, CarModel.MAZDA_6.getModelName(),2020),
-                new Car(75, CarModel.LADA_GRANTA.getModelName(),2020),
-                new Car(65, CarModel.LADA_GRANTA.getModelName(),2020)
+                ImmutableCar.create(CarModel.AUDI_A4.getModelName(),60,2020),
+                ImmutableCar.create(CarModel.AUDI_A4.getModelName(),70,2020),
+                ImmutableCar.create(CarModel.TOYOTA_CAMRY.getModelName(),70,2020),
+                ImmutableCar.create(CarModel.MAZDA_6.getModelName(),78,2020),
+                ImmutableCar.create(CarModel.LADA_GRANTA.getModelName(),75,2020),
+                ImmutableCar.create(CarModel.LADA_GRANTA.getModelName(),65,2020)
             )
         );
 
-        List<Car> expected1 = new ArrayList<>(
+        List<ImmutableCar> expected1 = new ArrayList<>(
             List.of(
-                new Car(78, CarModel.MAZDA_6.getModelName(),2020),
-                new Car(75, CarModel.LADA_GRANTA.getModelName(),2020),
-                new Car(70, CarModel.AUDI_A4.getModelName(),2020),
-                new Car(70, CarModel.TOYOTA_CAMRY.getModelName(),2020),
-                new Car(65, CarModel.LADA_GRANTA.getModelName(),2020),
-                new Car(60, CarModel.AUDI_A4.getModelName(),2020)
+                actual1.get(3),
+                actual1.get(4),
+                actual1.get(1),
+                actual1.get(2),
+                actual1.get(5),
+                actual1.get(0)
             )
         );
 
-        CarSorter carSorter = new CarSorter(new InsertionSort());
+        CarSorter carSorter = new CarSorter(new InsertionSortStrategy());
         carSorter.sort(actual1);
 
         Assert.assertEquals(expected1, actual1);
@@ -65,34 +65,33 @@ public class InsertionSortTest {
 
     @Test
     public void sortByModel() {
-        List<Car> actual1 = new ArrayList<>(
+        List<ImmutableCar> actual1 = new ArrayList<>(
             List.of(
-                new Car(60, CarModel.KIA_RIO.getModelName(),2020),
-                new Car(60, CarModel.AUDI_A4.getModelName(),2020),
-                new Car(60, CarModel.TOYOTA_CAMRY.getModelName(),2020),
-                new Car(60, CarModel.MAZDA_6.getModelName(),2020),
-                new Car(60, CarModel.LADA_GRANTA.getModelName(),2020),
-                new Car(60, CarModel.LADA_VESTA.getModelName(), 2020),
-                new Car(60, CarModel.FORD_FOCUS.getModelName(),2020)
+                ImmutableCar.create(CarModel.KIA_RIO.getModelName(),60,2020),
+                ImmutableCar.create( CarModel.AUDI_A4.getModelName(),60,2020),
+                ImmutableCar.create(CarModel.TOYOTA_CAMRY.getModelName(),60,2020),
+                ImmutableCar.create(CarModel.MAZDA_6.getModelName(),60,2020),
+                ImmutableCar.create(CarModel.LADA_GRANTA.getModelName(),60,2020),
+                ImmutableCar.create(CarModel.LADA_VESTA.getModelName(),60, 2020),
+                ImmutableCar.create(CarModel.FORD_FOCUS.getModelName(),60,2020)
             )
         );
 
-        List<Car> expected1 = new ArrayList<>(
+        List<ImmutableCar> expected1 = new ArrayList<>(
             List.of(
-                new Car(60, CarModel.AUDI_A4.getModelName(),2020),
-                new Car(60, CarModel.FORD_FOCUS.getModelName(),2020),
-                new Car(60, CarModel.KIA_RIO.getModelName(),2020),
-                new Car(60, CarModel.LADA_GRANTA.getModelName(),2020),
-                new Car(60, CarModel.LADA_VESTA.getModelName(), 2020),
-                new Car(60, CarModel.MAZDA_6.getModelName(),2020),
-                new Car(60, CarModel.TOYOTA_CAMRY.getModelName(),2020)
+                actual1.get(1),
+                actual1.get(6),
+                actual1.get(0),
+                actual1.get(4),
+                actual1.get(5),
+                actual1.get(3),
+                actual1.get(2)
             )
         );
 
-        CarSorter carSorter = new CarSorter(new InsertionSort());
+        CarSorter carSorter = new CarSorter(new InsertionSortStrategy());
         carSorter.sort(actual1);
 
         Assert.assertEquals(expected1, actual1);
     }
 }
-

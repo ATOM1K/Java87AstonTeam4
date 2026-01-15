@@ -1,16 +1,23 @@
 package org.example.strategy;
 
-import org.example.improved.Car;
+import org.example.classes.ImmutableCar;
+import org.example.comparator.BaseComparator;
+
 import java.util.Comparator;
 import java.util.List;
 
 /**
  * Стратегия сортировки выбором.
  */
-public class SelectionSortStrategy implements SortStrategy {
+public class SelectionSortStrategy implements SortStrategy<ImmutableCar> {
 
     @Override
-    public void sort(List<Car> cars, Comparator<Car> comparator) {
+    public void sort(List<ImmutableCar> cars) {
+        sort(cars, new BaseComparator());
+    }
+
+    @Override
+    public void sort(List<ImmutableCar> cars, Comparator<ImmutableCar> comparator) {
         int n = cars.size();
 
         for (int i = 0; i < n - 1; i++) {
@@ -23,7 +30,7 @@ public class SelectionSortStrategy implements SortStrategy {
             }
 
             // Меняем местами найденный минимальный элемент с первым элементом
-            Car temp = cars.get(minIndex);
+            ImmutableCar temp = cars.get(minIndex);
             cars.set(minIndex, cars.get(i));
             cars.set(i, temp);
         }
@@ -34,9 +41,4 @@ public class SelectionSortStrategy implements SortStrategy {
         return "Сортировка выбором";
     }
 
-    @Override
-    public String getDescription() {
-        return "Алгоритм, который на каждом шаге находит минимальный элемент\n" +
-                "из неотсортированной части и помещает его в начало.";
-    }
 }

@@ -1,4 +1,6 @@
 package org.example.dopolnitelnoe3;
+import org.example.classes.Car;
+
 import java.util.*;
 
     public class CarCollection implements Iterable<Car> {

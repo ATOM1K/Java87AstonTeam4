@@ -1,15 +1,16 @@
 package org.example.comparator;
 
-import org.example.improved.Car;
+import org.example.classes.Car;
+import org.example.classes.ImmutableCar;
 import java.util.Comparator;
 
 /**
  * Компаратор для сортировки автомобилей по модели (алфавитный порядок).
  */
-public class CarModelComparator implements Comparator<Car> {
+public class CarModelComparator implements Comparator<ImmutableCar> {
 
     @Override
-    public int compare(Car car1, Car car2) {
+    public int compare(ImmutableCar car1, ImmutableCar car2) {
         return car1.getModel().compareToIgnoreCase(car2.getModel());
     }
 

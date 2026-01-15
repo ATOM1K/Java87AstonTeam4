@@ -1,15 +1,16 @@
 package org.example.comparator;
 
-import org.example.improved.Car;
+import org.example.classes.Car;
+import org.example.classes.ImmutableCar;
 import java.util.Comparator;
 
 /**
  * Компаратор для сортировки автомобилей по мощности.
  */
-public class CarPowerComparator implements Comparator<Car> {
+public class CarPowerComparator implements Comparator<ImmutableCar> {
 
     @Override
-    public int compare(Car car1, Car car2) {
+    public int compare(ImmutableCar car1, ImmutableCar car2) {
         return Double.compare(car1.getPower(), car2.getPower());
     }
 

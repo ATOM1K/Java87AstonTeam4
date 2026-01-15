@@ -1,39 +1,37 @@
 package org.example.strategy;
 
-import org.example.improved.Car;
+import org.example.classes.ImmutableCar;
+import org.example.comparator.BaseComparator;
+
 import java.util.Comparator;
 import java.util.List;
 
 /**
  * Стратегия сортировки вставками.
  */
-public class InsertionSortStrategy implements SortStrategy {
+public class InsertionSortStrategy implements SortStrategy<ImmutableCar> {
 
     @Override
-    public void sort(List<Car> items, Comparator<Car> comparator) {
-        int n = items.size();
-        for (int i = 1; i < n; ++i) {
-            Car key = items.get(i);
-            int j = i - 1;
+    public void sort(List<ImmutableCar> cars) {
+        sort(cars, new BaseComparator());
+    }
 
-            // еремещаем элементы items[0..i-1], которые больше key,
-            // на одну позицию вперед от их текущей позиции
-            while (j >= 0 && comparator.compare(items.get(j), key) > 0) {
-                items.set(j + 1, items.get(j));
-                j = j - 1;
+    @Override
+    public void sort(List<ImmutableCar> cars, Comparator<ImmutableCar> comparator) {
+        int j = 0;
+        for (int i = 1; i < cars.size(); i++) {
+            ImmutableCar curCar = cars.get(i);
+            j = i;
+            while (j >= 1 && comparator.compare(cars.get(j-1), (curCar)) > 0) {
+                cars.set(j, cars.get(j-1));
+                j--;
             }
-            items.set(j + 1, key);
+            cars.set(j,curCar);
         }
     }
 
     @Override
     public String getName() {
         return "Сортировка вставками";
-    }
-
-    @Override
-    public String getDescription() {
-        return "ффективный алгоритм для небольших наборов данных. " +
-               "аботает аналогично тому, как человек сортирует карты в руке.";
     }
 }

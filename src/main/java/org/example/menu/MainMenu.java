@@ -19,7 +19,7 @@ public class MainMenu {
      * Запускает главный цикл приложения.
      */
     public void run() {
-        System.out.println("ПРИЛОЖЕНИЕ ДЛЯ РАБОТЫ С АВТОМОБИЛЯМИ");
+        System.out.println("🚗 ПРИЛОЖЕНИЕ ДЛЯ РАБОТЫ С АВТОМОБИЛЯМИ");
         System.out.println("==========================================\n");
 
         while (running) {
@@ -38,11 +38,11 @@ public class MainMenu {
                 case 9 -> clearList();
                 case 10 -> streamOperationsMenu();
                 case 0 -> exit();
-                default -> System.out.println("Неверный выбор!");
+                default -> System.out.println("❌ Неверный выбор!");
             }
 
             if (running) {
-                System.out.println("\n" + "-".repeat(50));
+                System.out.println("\n" + "─".repeat(50));
                 System.out.print("Нажмите Enter для продолжения...");
                 scanner.nextLine();
             }
@@ -50,22 +50,22 @@ public class MainMenu {
     }
 
     private void printMainMenu() {
-        System.out.println("\n==========================================");
-        System.out.println("            ГЛАВНОЕ МЕНЮ");
-        System.out.println("==========================================");
-        System.out.println(" 1. Заполнить список вручную");
-        System.out.println(" 2. Заполнить список случайными данными");
-        System.out.println(" 3. Заполнить список из файла");
-        System.out.println(" 4. Показать список автомобилей");
-        System.out.println(" 5. Отсортировать список");
-        System.out.println(" 6. Сортировка только четных значений (Доп1)");
-        System.out.println(" 7. Сохранить в файл (Доп2)");
-        System.out.println(" 8. Найти модель (Доп4 - многопоточный)");
-        System.out.println(" 9. Очистить список");
-        System.out.println("10. Streams API операции (Доп.3)");
-        System.out.println(" 0. Выйти");
-        System.out.println("==========================================");
-        System.out.print("\nВыберите действие (0-10): ");
+        System.out.println("╔══════════════════════════════════════════════╗");
+        System.out.println("║                 ГЛАВНОЕ МЕНЮ                 ║");
+        System.out.println("╠══════════════════════════════════════════════╣");
+        System.out.println("║ 1. Заполнить список вручную                  ║");
+        System.out.println("║ 2. Заполнить список случайными данными       ║");
+        System.out.println("║ 3. Заполнить список из файла                 ║");
+        System.out.println("║ 4. Показать список автомобилей               ║");
+        System.out.println("║ 5. Отсортировать список                      ║");
+        System.out.println("║ 6. Сортировка только четных значений (Доп1)  ║");
+        System.out.println("║ 7. Сохранить в файл (Доп2)                   ║");
+        System.out.println("║ 8. Найти модель (Доп4 - многопоточный)       ║");
+        System.out.println("║ 9. Очистить список                           ║");
+        System.out.println("║10. Streams API операции (Доп.3)              ║");
+        System.out.println("║ 0. Выйти                                     ║");
+        System.out.println("╚══════════════════════════════════════════════╝");
+        System.out.print("\nВыберите действие (0-9): ");
     }
 
     private void fillManually() {
@@ -89,13 +89,13 @@ public class MainMenu {
     }
 
     private void sortMenu() {
-        System.out.println("\n==========================================");
-        System.out.println("           ВЫБОР АЛГОРИТМА");
-        System.out.println("==========================================");
-        System.out.println(" 1. Пузырьковая сортировка");
-        System.out.println(" 2. Сортировка выбором");
-        System.out.println(" 3. Сортировка вставками");
-        System.out.println("==========================================");
+        System.out.println("\n╔══════════════════════════════════════════════╗");
+        System.out.println("║              ВЫБОР АЛГОРИТМА                 ║");
+        System.out.println("╠══════════════════════════════════════════════╣");
+        System.out.println("║ 1. Пузырьковая сортировка                    ║");
+        System.out.println("║ 2. Сортировка выбором                        ║");
+        System.out.println("║ 3. Сортировка вставками                      ║");
+        System.out.println("╚══════════════════════════════════════════════╝");
         System.out.print("Выберите алгоритм (1-3): ");
 
         int algoChoice = getMenuChoice(1, 3);
@@ -106,13 +106,13 @@ public class MainMenu {
             default -> new BubbleSortStrategy();
         };
 
-        System.out.println("\n==========================================");
-        System.out.println("           ВЫБОР КРИТЕРИЯ");
-        System.out.println("==========================================");
-        System.out.println(" 1. По мощности");
-        System.out.println(" 2. По модели");
-        System.out.println(" 3. По году производства");
-        System.out.println("==========================================");
+        System.out.println("\n╔══════════════════════════════════════════════╗");
+        System.out.println("║              ВЫБОР КРИТЕРИЯ                  ║");
+        System.out.println("╠══════════════════════════════════════════════╣");
+        System.out.println("║ 1. По мощности                               ║");
+        System.out.println("║ 2. По модели                                 ║");
+        System.out.println("║ 3. По году производства                      ║");
+        System.out.println("╚══════════════════════════════════════════════╝");
         System.out.print("Выберите критерий (1-3): ");
 
         int criteriaChoice = getMenuChoice(1, 3);
@@ -127,13 +127,13 @@ public class MainMenu {
     }
 
     private void sortEvenPowerMenu() {
-        System.out.println("\n==========================================");
-        System.out.println("   СОРТИРОВКА ТОЛЬКО ЧЕТНЫХ ЗНАЧЕНИЙ");
-        System.out.println("==========================================");
-        System.out.println(" 1. Пузырьковая сортировка");
-        System.out.println(" 2. Сортировка выбором");
-        System.out.println(" 3. Сортировка вставками");
-        System.out.println("==========================================");
+        System.out.println("\n╔══════════════════════════════════════════════╗");
+        System.out.println("║     СОРТИРОВКА ТОЛЬКО ЧЕТНЫХ ЗНАЧЕНИЙ        ║");
+        System.out.println("╠══════════════════════════════════════════════╣");
+        System.out.println("║ 1. Пузырьковая сортировка                    ║");
+        System.out.println("║ 2. Сортировка выбором                        ║");
+        System.out.println("║ 3. Сортировка вставками                      ║");
+        System.out.println("╚══════════════════════════════════════════════╝");
         System.out.print("Выберите алгоритм (1-3): ");
 
         int choice = getMenuChoice(1, 3);
@@ -149,7 +149,7 @@ public class MainMenu {
 
     private void saveToFileMenu() {
         if (carService.getCount() == 0) {
-            System.out.println("Список автомобилей пуст!");
+            System.out.println("❌ Список автомобилей пуст!");
             return;
         }
 
@@ -164,7 +164,7 @@ public class MainMenu {
 
     private void searchMenu() {
         if (carService.getCount() == 0) {
-            System.out.println("Список автомобилей пуст!");
+            System.out.println("❌ Список автомобилей пуст!");
             return;
         }
 
@@ -181,7 +181,7 @@ public class MainMenu {
         if (confirmation.equalsIgnoreCase("да") || confirmation.equalsIgnoreCase("y")) {
             carService.clear();
         } else {
-            System.out.println("Отменено");
+            System.out.println("❌ Отменено");
         }
     }
 
@@ -220,7 +220,7 @@ public class MainMenu {
     private void exit() {
         System.out.println("\n==========================================");
         System.out.println("Спасибо за использование приложения!");
-        System.out.println("До свидания!");
+        System.out.println("До свидания! 👋");
         System.out.println("==========================================");
         running = false;
     }
@@ -232,10 +232,10 @@ public class MainMenu {
                 if (choice >= min && choice <= max) {
                     return choice;
                 } else {
-                    System.out.printf("Введите число от %d до %d: ", min, max);
+                    System.out.printf("❌ Введите число от %d до %d: ", min, max);
                 }
             } catch (NumberFormatException e) {
-                System.out.printf("Введите число от %d до %d: ", min, max);
+                System.out.printf("❌ Введите число от %d до %d: ", min, max);
             }
         }
     }

@@ -5,10 +5,12 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * нтерфейс стратегии сортировки.
- * аттерн Стратегия позволяет менять алгоритм сортировки во время выполнения.
+ * Интерфейс стратегии сортировки.
+ * Паттерн Стратегия позволяет менять алгоритм сортировки во время выполнения.
  */
-public interface SortStrategy {
+public interface SortStrategy<T> {
+    void sort(List<T> cars);
+    void sort(List<T> cars, Comparator<T> comparator);
 
     /**
      * Сортирует список автомобилей с использованием заданного компаратора.
@@ -18,14 +20,7 @@ public interface SortStrategy {
     void sort(List<Car> cars, Comparator<Car> comparator);
 
     /**
-     * озвращает название стратегии.
+     * Возвращает название стратегии.
      */
     String getName();
-
-    /**
-     * озвращает описание алгоритма.
-     */
-    default String getDescription() {
-        return "лгоритм сортировки";
-    }
 }
